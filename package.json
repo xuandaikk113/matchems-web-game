@@ -1,0 +1,21 @@
+{
+  "name": "memory-game",
+  "version": "1.0.0",
+  "description": "A memory game where players find matching pairs of images.",
+  "main": "src/js/app.js",
+  "scripts": {
+    "start": "live-server src",
+    "build": "echo 'Build step can be added here.'"
+  },
+  "keywords": [
+    "memory",
+    "game",
+    "javascript",
+    "web"
+  ],
+  "author": "Your Name",
+  "license": "MIT",
+  "dependencies": {
+    "live-server": "^1.2.1"
+  }
+}
