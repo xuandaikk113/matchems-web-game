@@ -2,6 +2,8 @@ body {
     margin: 0;
     padding: 0;
     font-family: Arial, sans-serif;
+    height: 100vh;
+    overflow: hidden;
 }
 
 .container {
@@ -9,6 +11,8 @@ body {
     flex-direction: column;
     align-items: center;
     padding: 20px;
+    height: 100vh;
+    overflow: hidden;
 }
 
 /* Xóa các quy tắc .game-board và .card từ đây vì chúng đã được định nghĩa trong game.css */

@@ -17,16 +17,16 @@ class Game {
         let requiredPairs, columns;
         switch (difficulty) {
             case 'easy': 
-                requiredPairs = 6; 
-                columns = 3;
-                break;
-            case 'medium': 
                 requiredPairs = 8; 
                 columns = 4;
                 break;
-            case 'hard': 
+            case 'medium': 
                 requiredPairs = 12; 
-                columns = 4;
+                columns = 6;
+                break;
+            case 'hard': 
+                requiredPairs = 16; 
+                columns = 8;
                 break;
             default: 
                 requiredPairs = 8;
@@ -45,6 +45,14 @@ class Game {
             'images/cards/card-set-1/sasuke1.jpg',
             'images/cards/card-set-1/hinata1.jpg',
             'images/cards/card-set-1/tsunade1.jpg',
+            'images/cards/card-set-1/1.jpg',
+            'images/cards/card-set-1/2.jpg',
+            'images/cards/card-set-1/3.jpg',
+            'images/cards/card-set-1/4.jpg',
+            'images/cards/card-set-1/5.jpg',
+            'images/cards/card-set-1/6.jpg',
+            'images/cards/card-set-1/7.jpg',
+            
             // Thêm các hình ảnh khác trong thư mục nếu cần
         ];
         
@@ -103,12 +111,42 @@ class Game {
         const gameBoard = document.getElementById('game-board');
         if (!gameBoard) return;
         
-        // Thiết lập số cột dựa trên độ khó
+        // Remove old mode classes
+        gameBoard.classList.remove('easy-mode', 'medium-mode', 'hard-mode');
+        // Add new mode class
+        gameBoard.classList.add(`${this.difficulty}-mode`);
+        
+        // Set columns based on difficulty
         gameBoard.style.gridTemplateColumns = `repeat(${this.gridColumns}, 1fr)`;
+        
+        // Set max-width based on difficulty/columns
+        if (this.difficulty === 'easy') {
+            gameBoard.style.maxWidth = '600px';  // Smaller for fewer cards
+        } else if (this.difficulty === 'medium') {
+            gameBoard.style.maxWidth = '700px';  // Medium width
+        } else {
+            gameBoard.style.maxWidth = '800px';  // Full width for hard mode
+        }
         
         gameBoard.innerHTML = '';
         
         const cardBackImage = 'images/cards/card-back.svg';
+        
+        // Tính toán kích thước của thẻ dựa trên số lượng thẻ và kích thước màn hình
+        const gameBoardWidth = gameBoard.clientWidth;
+        const gameBoardHeight = window.innerHeight * 0.6; // Giới hạn chiều cao game board
+        
+        // Tính toán số hàng cần thiết dựa trên số thẻ và số cột
+        const totalCards = this.cards.length;
+        const rows = Math.ceil(totalCards / this.gridColumns);
+        
+        // Tính toán chiều cao tối đa cho mỗi thẻ
+        const gapSize = 16; // khoảng cách giữa các thẻ
+        const availableWidth = (gameBoardWidth - (gapSize * (this.gridColumns - 1))) / this.gridColumns;
+        const availableHeight = (gameBoardHeight - (gapSize * (rows - 1))) / rows;
+        
+        // Chọn kích thước nhỏ hơn giữa chiều rộng và chiều cao
+        const cardSize = Math.min(availableWidth, availableHeight);
         
         this.cards.forEach((image, index) => {
             const card = document.createElement('div');
@@ -133,6 +171,36 @@ class Game {
             
             card.addEventListener('click', () => this.flipCard(card));
             gameBoard.appendChild(card);
+        });
+
+        // Resize handler để đảm bảo thẻ luôn vừa với màn hình
+        this.resizeHandler = () => this.resizeCards();
+        window.addEventListener('resize', this.resizeHandler);
+        
+        // Thực hiện resize ngay lập tức
+        this.resizeCards();
+    }
+
+    // Thêm phương thức mới để resize các thẻ
+    resizeCards() {
+        const gameBoard = document.getElementById('game-board');
+        if (!gameBoard) return;
+        
+        const gameBoardWidth = gameBoard.clientWidth;
+        const gameBoardHeight = window.innerHeight * 0.6;
+        
+        const totalCards = this.cards.length;
+        const rows = Math.ceil(totalCards / this.gridColumns);
+        
+        const gapSize = 16;
+        const availableWidth = (gameBoardWidth - (gapSize * (this.gridColumns - 1))) / this.gridColumns;
+        const availableHeight = (gameBoardHeight - (gapSize * (rows - 1))) / rows;
+        
+        const cardSize = Math.min(availableWidth, availableHeight, 140); // Giới hạn kích thước tối đa là 140px
+        
+        document.querySelectorAll('.card').forEach(card => {
+            card.style.width = `${cardSize}px`;
+            card.style.height = `${cardSize}px`;
         });
     }
 
@@ -226,6 +294,7 @@ class Game {
     }
     
     restartGame() {
+        this.cleanup();
         this.stopTimer();
         this.startGame();
     }
@@ -265,6 +334,13 @@ class Game {
         } catch(error) {
             console.log('Error playing sound:', error);
         }
+    }
+
+    cleanup() {
+        if (this.resizeHandler) {
+            window.removeEventListener('resize', this.resizeHandler);
+        }
+        this.stopTimer();
     }
 }
 

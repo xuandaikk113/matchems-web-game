@@ -1,7 +1,36 @@
 import Game from './game.js';
 import { saveScore, displayLeaderboard } from './leaderboard.js';
+// Add this function at the beginning of your DOMContentLoaded event
+function createFloatingCards() {
+    const cardBackground = document.getElementById('card-background');
+    if (!cardBackground) return;
+    
+    const numCards = 300; // Number of floating cards
+    
+    for (let i = 0; i < numCards; i++) {
+        const card = document.createElement('div');
+        card.classList.add('floating-card');
+        
+        // Ensure cards are distributed across the entire viewport
+        card.style.left = `${Math.random() * 100}vw`;
+        card.style.top = `${Math.random() * 100}vh`;
+        
+        // Random rotation
+        card.style.transform = `rotate(${Math.random() * 360}deg)`;
+        
+        // Random animation delay
+        card.style.animationDelay = `${Math.random() * 5}s`;
+        
+        // Make sure cards have absolute positioning
+        card.style.position = 'absolute';
+        
+        cardBackground.appendChild(card);
+    }
+}
+
 
 document.addEventListener('DOMContentLoaded', () => {
+    createFloatingCards(); // Call this at the start
     // Elements
     const startButton = document.getElementById('start-button');
     const restartButton = document.getElementById('restart-button');

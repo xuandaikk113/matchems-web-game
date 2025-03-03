@@ -1,15 +1,16 @@
 #game-container {
     width: 100%;
+    height: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
+    overflow: hidden; /* Ngăn scroll */
 }
 
 .game-info {
     display: flex;
     justify-content: space-between;
     width: 100%;
-    max-width: 800px;
     margin-bottom: 20px;
     background-color: white;
     padding: 15px;
@@ -38,12 +39,18 @@
     width: 100%;
     margin-bottom: 20px;
     justify-items: center; /* Đảm bảo các thẻ được căn giữa trong ô lưới */
+    align-items: center;
+    margin: 0 auto;
 }
 
 .card {
     position: relative;
-    width: 140px; /* Kích thước vuông - thiết lập cả chiều rộng và chiều cao bằng nhau */
-    height: 140px;
+    /* Bỏ kích thước cố định width và height ở đây 
+    width: 140px;
+    height: 140px; */
+    aspect-ratio: 1; /* Duy trì tỷ lệ hình vuông */
+    width: 100%; /* Kích thước thẻ sẽ tự điều chỉnh theo container */
+    max-width: 140px; /* Giới hạn kích thước tối đa */
     perspective: 1000px;
     cursor: pointer;
     border-radius: 8px;
@@ -92,8 +99,25 @@
 
 .game-controls {
     display: flex;
+    justify-content: center;
     gap: 15px;
     margin-top: 20px;
+}
+
+/* Thêm style đặc biệt cho các chế độ khác nhau */
+#game-board.easy-mode {
+    grid-template-columns: repeat(3, 1fr);
+    max-width: 600px; /* Smaller max-width for fewer cards */
+}
+
+#game-board.medium-mode {
+    grid-template-columns: repeat(4, 1fr);
+    max-width: 700px;
+}
+
+#game-board.hard-mode {
+    grid-template-columns: repeat(4, 1fr);
+    max-width: 800px;
 }
 
 @media (max-width: 768px) {
@@ -103,8 +127,19 @@
     }
     
     .card {
-        width: 120px; /* Hình vuông nhỏ hơn cho màn hình vừa */
-        height: 120px;
+        max-width: 120px;
+    }
+    
+    #game-board.easy-mode {
+        grid-template-columns: repeat(3, 1fr);
+    }
+    
+    #game-board.medium-mode {
+        grid-template-columns: repeat(3, 1fr);
+    }
+    
+    #game-board.hard-mode {
+        grid-template-columns: repeat(4, 1fr);
     }
 }
 
@@ -115,12 +150,17 @@
     }
     
     .card {
-        width: 100px; /* Hình vuông nhỏ nhất cho màn hình di động */
-        height: 100px;
+        max-width: 100px;
     }
     
     .game-info {
         flex-direction: column;
         gap: 10px;
+    }
+    
+    #game-board.easy-mode,
+    #game-board.medium-mode,
+    #game-board.hard-mode {
+        grid-template-columns: repeat(2, 1fr);
     }
 }

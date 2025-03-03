@@ -21,12 +21,18 @@ body {
     background-color: var(--background);
     color: var(--text-color);
     line-height: 1.6;
+    margin: 0;
+    padding: 0;
+    overflow: hidden; /* Ngăn scroll */
+    height: 100vh; /* Đảm bảo chiều cao bằng viewport */
 }
 
 #app {
     min-height: 100vh;
+    max-height: 100vh; /* Thêm max-height */
     display: flex;
     flex-direction: column;
+    overflow: hidden; /* Ngăn scroll trong app container */
 }
 
 header {
@@ -51,6 +57,7 @@ main {
     max-width: 1200px;
     margin: 0 auto;
     width: 100%;
+    overflow: hidden; /* Ngăn scroll trong main */
 }
 
 footer {
