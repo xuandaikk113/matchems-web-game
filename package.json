@@ -5,7 +5,7 @@
   "main": "src/js/app.js",
   "scripts": {
     "start": "live-server src",
-    "build": "npm build --output public"
+    "build": "npm run build --output public"
   },
   "keywords": [
     "memory",
