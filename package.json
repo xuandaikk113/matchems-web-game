@@ -2,10 +2,11 @@
   "name": "memory-game",
   "version": "1.0.0",
   "description": "A memory game where players find matching pairs of images.",
-  "main": "src/js/app.js",
+  "type": "module",
   "scripts": {
-    "start": "live-server src",
-    "build": "npm run build --output public"
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
   },
   "keywords": [
     "memory",
@@ -15,7 +16,7 @@
   ],
   "author": "Your Name",
   "license": "MIT",
-  "dependencies": {
-    "live-server": "^1.2.1"
+  "devDependencies": {
+    "vite": "^5.4.14"
   }
 }

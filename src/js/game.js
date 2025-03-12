@@ -40,18 +40,18 @@ class Game {
     loadImages(requiredPairs = 8) {
         // Đường dẫn đến các hình ảnh trong thư mục card-set-1
         const availableImages = [
-            'images/cards/card-set-1/itachi1.jpg',
-            'images/cards/card-set-1/naruto1.jpg',
-            'images/cards/card-set-1/sasuke1.jpg',
-            'images/cards/card-set-1/hinata1.jpg',
-            'images/cards/card-set-1/tsunade1.jpg',
-            'images/cards/card-set-1/1.jpg',
-            'images/cards/card-set-1/2.jpg',
-            'images/cards/card-set-1/3.jpg',
-            'images/cards/card-set-1/4.jpg',
-            'images/cards/card-set-1/5.jpg',
-            'images/cards/card-set-1/6.jpg',
-            'images/cards/card-set-1/7.jpg',
+            '/images/cards/card-set-1/itachi1.jpg',
+            '/images/cards/card-set-1/naruto1.jpg',
+            '/images/cards/card-set-1/sasuke1.jpg',
+            '/images/cards/card-set-1/hinata1.jpg',
+            '/images/cards/card-set-1/tsunade1.jpg',
+            '/images/cards/card-set-1/1.jpg',
+            '/images/cards/card-set-1/2.jpg',
+            '/images/cards/card-set-1/3.jpg',
+            '/images/cards/card-set-1/4.jpg',
+            '/images/cards/card-set-1/5.jpg',
+            '/images/cards/card-set-1/6.jpg',
+            '/images/cards/card-set-1/7.jpg',
             
             // Thêm các hình ảnh khác trong thư mục nếu cần
         ];
@@ -329,7 +329,7 @@ class Game {
     
     playSound(soundName) {
         try {
-            const audio = new Audio(`audio/${soundName}-cut.mp3`);
+            const audio = new Audio(`/audio/${soundName}-cut.mp3`);
             audio.play().catch(e => console.log('Audio playback failed:', e));
         } catch(error) {
             console.log('Error playing sound:', error);
